@@ -4,12 +4,14 @@ require('../../config/db.js');
 const createNewUser  = async ( {userName, userSurname, userEmail, password} ) => {
 
     let newUser = new U.User(
+
         {
             name : userName,
             surname : userSurname,
             email : userEmail,
             password : password
         }
+        
     );
 
     try {
