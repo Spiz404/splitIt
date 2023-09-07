@@ -12,9 +12,9 @@ const newGroup  = async (req, res) => {
 
     const name = req.body.name;
     const founder = req.body.email;
-
+    //console.log("dati richiesta: ", name, founder);
     const data = await groupDbFunctions.newGroup(name, founder);
-
+    
     res.send(data);
 
 };
@@ -31,7 +31,6 @@ const deleteGroup = async (req, res) => {
 const addUserToGroup = async (req, res) => {
 
     const groupId = req.body.id;
-
     const userEmail = req.body.email;
     const data = await groupDbFunctions.addUserToGroup(groupId, userEmail);
     res.json(data);

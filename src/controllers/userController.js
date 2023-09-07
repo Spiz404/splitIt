@@ -1,5 +1,13 @@
 const userDbFunctions = require('../../src/models/User/User.js');
 
+const getUserInfo = async (req, res) => {
+
+    const userEmail = req.query.email;
+    const data = await userDbFunctions.getUser(userEmail);
+    res.send(data);
+
+};
+
 const newUser = async (req, res) => {
 
     const name = req.body.name;
@@ -34,6 +42,21 @@ const deleteUser = async (req, res) => {
 
 }
 
+/* function that returns the groups of the user with the given email */
 
+const getUserGroups = async (req, res) => {
+    
+    //console.log(req);
+    const userEmail = req.query.email;
+    const data = await userDbFunctions.getUser(userEmail);
+    try {
+        res.send(data?.groups);
+    }
+    catch (err) {
+        console.log("error: " + err);
+    }
+    
+    
+}
 
-module.exports = { newUser, updateUserRegistry, deleteUser };
+module.exports = { newUser, updateUserRegistry, deleteUser, getUserGroups, getUserInfo };

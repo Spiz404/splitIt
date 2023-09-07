@@ -1,6 +1,18 @@
 const U = require('./UserModel.js');
 require('../../config/db.js');
 
+/* function that returns the user document with the given email */
+
+const getUser = async (userEmail) => {
+
+    let userData = await U.User.findOne({email : userEmail}).exec();
+    console.log(userData);
+    return userData;
+
+}
+
+/* function that creates a new user document in the database */
+
 const createNewUser  = async ( {userName, userSurname, userEmail, password} ) => {
 
     let newUser = new U.User(
@@ -27,6 +39,8 @@ const createNewUser  = async ( {userName, userSurname, userEmail, password} ) =>
     }
     
 };
+
+/* function that deletes the user with the given email from the database */
 
 const deleteUser = async (userEmail) => {
 
@@ -73,8 +87,11 @@ const updateUser = async (userEmail, toUpdate, newValues) => {
         console.log(error);
         return "error : " + error;
     }
-
 };
 
+/*
+    function that fetches all the groups in which the user with the given email is enrolled
+*/
 
-module.exports = { createNewUser, deleteUser, updateUser };
+
+module.exports = { createNewUser, deleteUser, updateUser, getUser };

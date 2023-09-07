@@ -1,9 +1,11 @@
 const G = require('./GroupModel.js');
 const groupUtils = require('../../../utils/groupUtils.js');
 const { Operation } = require('../Operations/OperationSchemaAndModel.js');
+const userUtils = require('../../../utils/userUtils.js');
 
 const newGroup = async (groupName, founder) => {
-
+    console.log("richiesta creazione nuovo gruppo");
+    
     let newGroup = new G.Group(
         {
             name : groupName,
@@ -15,6 +17,9 @@ const newGroup = async (groupName, founder) => {
     );
     try {
         const data = await newGroup.save();
+        console.log("tento di aggiungere il gruppo all'utente");
+        await userUtils.addGroupToUser(founder, {name : data.name, id : data._id});
+        console.log("almeno ho passato l'istruzione");
         return "Group created correctly";
     }
     catch(error) {
@@ -52,6 +57,10 @@ const addUserToGroup = async (groupId, userEmail) => {
         const groupData = await groupUtils.findDocumentById(groupId);
         groupData.users.push(userEmail);
         await groupData.save();
+
+        // updating user's groups
+
+        userUtils.addGroupToUser(userEmail, {name : groupData.name, id : groupData._id});
         return `user ${userEmail} correctly added to ${groupId} group`;
 
     }

@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 
+const groupEnrollSchema = new mongoose.Schema({
+    name : String,
+    id : String
+});
+
 // creating user mongoose Schema
 
 const userSchema = new mongoose.Schema({
@@ -23,8 +28,15 @@ const userSchema = new mongoose.Schema({
     password : {
         type : String,
         required : true
+    },
+
+    groups : {
+        type : [groupEnrollSchema],
+        required : true
     }
-})
+});
+
+
 
 // creating user model
 

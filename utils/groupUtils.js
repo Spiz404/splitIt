@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Group = require('../src/models/Groups/GroupModel.js').Group;
 const Debt = require('../src/models/Debts/DebtSchemaAndModel.js').Debt;
+
 const findDocumentById = async (id) => {
 
     const data = await Group.findById(id).exec();
