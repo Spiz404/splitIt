@@ -1,15 +1,16 @@
 const groupDbFunctions = require('../models/Groups/Group.js');
 
 const getGroupInfo = async (req, res) => {
-
-    const id = req.body.id;
+    console.log("[GET] REQUEST to /group");
+    const id = req.query.id;
     const data = await groupDbFunctions.getGroup(id);
     res.json(data);
 
 }
 
 const newGroup  = async (req, res) => {
-
+    console.log("[POST] REQUEST to /group");
+    console.log("request body: ", req.body);
     const name = req.body.name;
     const founder = req.body.email;
     //console.log("dati richiesta: ", name, founder);

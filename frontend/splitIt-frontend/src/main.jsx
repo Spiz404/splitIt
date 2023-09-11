@@ -12,7 +12,7 @@ import {
 import './index.css'
 import ErrorPage from './routes/error-page'
 import Groups from './routes/groups'
-
+import GroupPage from './routes/groupPage'
 
 const router = createBrowserRouter(
   [
@@ -25,6 +25,10 @@ const router = createBrowserRouter(
           path: "groups",
           element: <Groups />,
         },
+        {
+          path: "groups/:groupName",
+          element: <GroupPage />
+        }
       ],
     },
     

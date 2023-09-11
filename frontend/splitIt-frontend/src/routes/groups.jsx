@@ -6,21 +6,19 @@ import {openModal, closeModal} from "../features/groups/groupModalSlice";
 import { Reloading } from "../icons";
 import NewGroupForm from "../components/NewGroupForm";
 
-
 const Groups = () => {
     
     const dispatch = useDispatch();
     const {isLogged, username} = useSelector((state) => state.user);
     const {isModalOpen} = useSelector((state) => state.groupModal);
-    console.log(isModalOpen);
     const [isRefresh, setRefresh] = useState(false);
-    
+    const {isCreationLoading, isCreationError, isCreationFulfilled} = useSelector((state) => state.groupModal);
+
     useEffect(() => {
-        console.log(username);
         if(isLogged) dispatch(fetchUserGroups(username));
-        
+        dispatch(closeModal());
         setRefresh(false);
-    }, [isLogged, isRefresh]);
+    }, [isLogged, isRefresh, isCreationFulfilled]);
 
     const {isLoadingGroupFetch, isLoadingGroupFetchError, groups} = useSelector((state) => state.user);
     
@@ -28,15 +26,17 @@ const Groups = () => {
         return <h4> per poter visualizzare i tuoi gruppi, devi prima effettuare il login </h4>
     }
 
-    if (isLoadingGroupFetch){
+    if (isLoadingGroupFetch) {
         return <h4> loading... </h4>
     }
 
-    if (isLoadingGroupFetchError){
+    if (isLoadingGroupFetchError) {
         return <h4> error... </h4>
     }
- 
-    console.log("groups", groups);
+
+    if(isCreationLoading) {
+        return <h4>Creazione gruppo...</h4>;
+    }
 
     return (
 
@@ -47,17 +47,20 @@ const Groups = () => {
                 <Reloading />
                 </div>
             </div>
+            
             <div className='external-container'>
                 <div className="groups-container">
                     {
-                        isLogged && groups.map((group) => {
+                        
+                        isLogged && Array.isArray(groups) && groups.map((group) => {                                
                             return <GroupItem key = {group._id} {...group}/>})
+                        
                     }
                 
                 </div>
                 {
                     isModalOpen ?  
-                        <NewGroupForm />
+                        <NewGroupForm setRefresh = {setRefresh}/>
                     : 
                         <button className="btn btn-primary add-group-button" onClick = {() => dispatch(openModal())}>crea gruppo</button>
 

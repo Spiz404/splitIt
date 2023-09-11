@@ -46,7 +46,6 @@ const deleteUser = async (req, res) => {
 
 const getUserGroups = async (req, res) => {
     
-    //console.log(req);
     const userEmail = req.query.email;
     const data = await userDbFunctions.getUser(userEmail);
     try {

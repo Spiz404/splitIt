@@ -72,7 +72,7 @@ h1 {
   justify-content: center;
   background-color: #e8e8e8;
   border-radius: 1rem;
-  padding: 0.5rem;
+  /* padding: 0.5rem; */
 }
 
 .groups-container {
@@ -128,3 +128,60 @@ svg:hover {
   position: relative;
 }
 
+/* single group page */
+.external-group-container {
+  display: flex;
+  padding: 1rem;
+  margin: 2rem;
+  margin : 0 auto;
+  width: 70vm;
+  
+}
+
+.group-user-container {
+  float: left;
+  /* width: 30%; */
+  width: max-content;
+  /* background-color: #f8fafc; */
+  background-color: #EEEEEE;
+  border-radius: 5px;
+  margin-right: 1rem;
+  padding: 1rem;
+}
+
+.external-container-operations-debts {
+  display: flex;
+  flex-direction: column;
+  width: 70%; /* Larghezza delle div sopra/affianco */
+}
+
+
+.debts-container {
+  padding: 1rem;
+  width: 100%;
+  border-radius: 5px;
+  /* background-color: #f8fafc; */
+  background-color: #EEEEEE;
+}
+
+.debts-container p {
+  font-style: italic;
+  color: grey;
+  font-size: 10pt;
+}
+
+
+.operation-container {
+  padding: 1rem;
+  margin-top: 1rem;
+  width: 100%;
+  border-radius: 5px;
+  /* background-color: #f8fafc; */
+  background-color: #EEEEEE;
+}
+
+.operation-container p {
+  font-style: italic;
+  color: grey;
+  font-size: 10pt;
+}

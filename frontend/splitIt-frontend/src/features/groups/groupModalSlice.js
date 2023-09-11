@@ -5,12 +5,13 @@ const initialState = {
 
     isModalOpen : false,
     isCreationLoading : false,
-    isCreationFailed : false
+    isCreationFailed : false,
+    isCreationFulfilled : false
     
 };
 
 export const createNewGroup = createAsyncThunk(
-    '',
+    'group/createNewGroup',
 
     async (data, thunkAPI) => {
 
@@ -42,8 +43,7 @@ const groupModalSlice = createSlice(
 
             closeModal : (state) => {
                 state.isModalOpen = false;
-            },
-
+            }
 
         },
 
@@ -57,6 +57,7 @@ const groupModalSlice = createSlice(
             builder.addCase(createNewGroup.fulfilled, (state, action) => {
                 state.isCreationFailed = false;
                 state.isCreationLoading = false;
+                state.isCreationFulfilled = true;
             });
 
             builder.addCase(createNewGroup.rejected, (state, action) => {
@@ -68,5 +69,5 @@ const groupModalSlice = createSlice(
     }
 );
 
-export const {openModal, closeModal} = groupModalSlice.actions;
+export const {openModal, closeModal, setCurrentGroup} = groupModalSlice.actions;
 export default groupModalSlice.reducer;

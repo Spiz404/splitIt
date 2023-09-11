@@ -1,30 +1,30 @@
 import { useDispatch, useSelector } from "react-redux";
 import { createNewGroup } from "../features/groups/groupModalSlice";
 import { closeModal } from "../features/groups/groupModalSlice";
-const NewGroupForm = () => {
+const NewGroupForm = ({setRefresh}) => {
 
     const {username : email} = useSelector((state) => state.user);
     const dispatch = useDispatch(createNewGroup({}));
 
-    const handleNewGroupSubmit = (e) => {
+    const handleNewGroupSubmit = async (e) => {
         e.preventDefault();
-        console.log("sono qua dentro");
+        //console.log("sono qua");
         const groupName = document.getElementById('groupName').value;
         
-        dispatch(createNewGroup({email : email, name : groupName}));
+        await dispatch(createNewGroup({email : email, name : groupName}));
         // closing new group form
-        dispatch(closeModal());
+        setRefresh(true);
+        //dispatch(closeModal());
     }
 
     return (
-        <form onSubmit={() => NewGroupForm()}>
+        <form onSubmit={(e) => handleNewGroupSubmit(e)}>
             <div className="form-group">
                 <label htmlFor="groupName">Nome gruppo</label>
                 <input className="form-control" id="groupName" aria-describedby="emailHelp" placeholder="Inserire nome nuovo gruppo"/>
-                {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
             </div>
             
-            <button type="button" className="btn btn-primary">crea gruppo</button>
+            <button type="submit" className="btn btn-primary">crea gruppo</button>
         </form>
     );
 }
