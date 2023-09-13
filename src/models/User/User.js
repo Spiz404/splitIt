@@ -6,7 +6,6 @@ require('../../config/db.js');
 const getUser = async (userEmail) => {
 
     let userData = await U.User.findOne({email : userEmail}).exec();
-    console.log(userData);
     return userData;
 
 }

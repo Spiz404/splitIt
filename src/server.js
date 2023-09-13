@@ -1,6 +1,7 @@
 require('./config/db.js');
 require('dotenv').config();
 require('nodemon');
+const {requestLogger} = require('../utils/middlewares/requestLogger.js')
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -12,6 +13,7 @@ app.use(cors());
 
 app.use(express.json());
 
+app.use(requestLogger);
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + "/public/index.html");

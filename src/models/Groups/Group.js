@@ -4,7 +4,6 @@ const { Operation } = require('../Operations/OperationSchemaAndModel.js');
 const userUtils = require('../../../utils/userUtils.js');
 
 const newGroup = async (groupName, founder) => {
-    console.log("richiesta creazione nuovo gruppo");
     
     let newGroup = new G.Group(
         {
@@ -17,9 +16,7 @@ const newGroup = async (groupName, founder) => {
     );
     try {
         const data = await newGroup.save();
-        console.log("tento di aggiungere il gruppo all'utente");
         await userUtils.addGroupToUser(founder, {name : data.name, id : data._id});
-        console.log("almeno ho passato l'istruzione");
         return "Group created correctly";
     }
     catch(error) {

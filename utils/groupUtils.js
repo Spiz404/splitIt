@@ -13,7 +13,6 @@ const calculateDebts =  async (groupDocument, operation) => {
 
     const {payer, partecipants, amount} = operation;
     let debts = groupDocument.get('debts');
-    console.log(debts);
     // logic explained
     /*
         first I check if an array for the payer and one of the partecipants
@@ -61,10 +60,8 @@ const calculateDebts =  async (groupDocument, operation) => {
         }
 
     }
-    console.log("generated debts array: " + debts);
     
     groupDocument.debts = debts;
-    console.log(groupDocument.toObject());
     return groupDocument;
 };
 
