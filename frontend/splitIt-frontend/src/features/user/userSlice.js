@@ -46,8 +46,8 @@ const userSlice = createSlice(
             });
 
             builder.addCase(fetchUserGroups.fulfilled, (state, action) => {
-                console.log("sono qui");
-                console.log(action);
+                // console.log("sono qui");
+                // console.log(action);
                 state.isLoadingGroupFetch = false;
                 state.isLoadingGroupFetchError = false;
                 state.groups = action.payload;

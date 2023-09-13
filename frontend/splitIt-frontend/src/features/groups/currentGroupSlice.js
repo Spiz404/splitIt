@@ -20,7 +20,7 @@ export const fetchCurrentGroupData = createAsyncThunk(
             apiQuery
         );
 
-        console.log("response: ", response);
+        //console.log("response: ", response);
         return response.data;
 });
 
@@ -37,6 +37,7 @@ const currentGroupSlice = createSlice({
     extraReducers : (builder) => {
 
         builder.addCase(fetchCurrentGroupData.pending, (state, action) => {
+            console.log("pending");
             state.isLoading = true;
             state.isError = false;
         }),
