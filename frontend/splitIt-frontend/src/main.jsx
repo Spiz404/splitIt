@@ -13,6 +13,8 @@ import './index.css'
 import ErrorPage from './routes/error-page'
 import Groups from './routes/groups'
 import GroupPage from './routes/groupPage'
+import LoginPage from './routes/loginPage'
+import RegisterPage from './routes/registerPage'
 
 const router = createBrowserRouter(
   [
@@ -28,6 +30,14 @@ const router = createBrowserRouter(
         {
           path: "groups/:groupName",
           element: <GroupPage />
+        },
+        {
+          path : "login",
+          element : <LoginPage/>
+        },
+        {
+          path: "register",
+          element : <RegisterPage/>
         }
       ],
     },

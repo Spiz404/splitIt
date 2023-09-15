@@ -10,10 +10,7 @@ const getUserInfo = async (req, res) => {
 
 const newUser = async (req, res) => {
 
-    const name = req.body.name;
-    const surname = req.body.surname;
-    const email = req.body.email;
-    const password = req.body.password;
+    const {name, surname, email, password} = req.body;
     const data = await userDbFunctions.createNewUser({userName : name, userSurname : surname, userEmail : email, password : password});
     res.send(data);
 }

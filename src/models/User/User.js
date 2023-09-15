@@ -1,10 +1,11 @@
 const U = require('./UserModel.js');
 require('../../config/db.js');
-
+const bcrypt = require('bcryptjs');
 /* function that returns the user document with the given email */
 
-const getUser = async (userEmail) => {
 
+const getUser = async (userEmail) => {
+    console.log(userEmail);
     let userData = await U.User.findOne({email : userEmail}).exec();
     return userData;
 
@@ -13,29 +14,45 @@ const getUser = async (userEmail) => {
 /* function that creates a new user document in the database */
 
 const createNewUser  = async ( {userName, userSurname, userEmail, password} ) => {
-
+    
+    const hashedPassword = await bcrypt.hash(password, 10);  
     let newUser = new U.User(
 
         {
             name : userName,
             surname : userSurname,
             email : userEmail,
-            password : password
+            password : hashedPassword
         }
         
     );
 
-    try {
+    U.User.findOne({email : userEmail})
+    .then((user) => {
+        if (user) return 1;
+        newUser.save()
+        .then (
+            () => {return 0}
+        )
+        .catch (
+            (err) => {return {ret : 1, error : err}}
+        )
+    }).catch(
+        err => { return {ret : 2, error : err} }
+    ) 
+     
+      
+    // try {
 
-        const data = await newUser.save();
-        return "user saved correctly";
+    //     const data = await newUser.save();
+    //     return "user saved correctly";
 
-    }
-    catch(error) {
+    // }
+    // catch(error) {
 
-        return "error : " + error;
+    //     return "error : " + error;
 
-    }
+    // }
     
 };
 

@@ -14,10 +14,8 @@ export const fetchCurrentGroupData = createAsyncThunk(
 
     async (group) => {
     
-        const apiQuery = `http://localhost:8080/group?id=${group}`;
-        console.log(apiQuery);
         const response = await axios.get(
-            apiQuery
+            `http://localhost:8080/group?id=${group}`
         );
 
         //console.log("response: ", response);
@@ -37,19 +35,20 @@ const currentGroupSlice = createSlice({
     extraReducers : (builder) => {
 
         builder.addCase(fetchCurrentGroupData.pending, (state, action) => {
-            console.log("pending");
+            // console.log("pending");
             state.isLoading = true;
             state.isError = false;
         }),
 
         builder.addCase(fetchCurrentGroupData.fulfilled, (state, action) => {
-            console.log("fulfilled", action);
+            // console.log("fulfilled", action);
             state.isLoading = false;
             state.isError = false;
             state.currentGroupData = action.payload;
         }),
 
         builder.addCase(fetchCurrentGroupData.rejected, (state, action) => {
+            console.log("rejected");
             state.isLoading = false;
             state.isError = true;
         })
