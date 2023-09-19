@@ -7,6 +7,17 @@ const Navbar = (props) => {
 
     const dispatch = useDispatch();
     
+    // check if there is a logged user 
+    
+    useEffect(() => {
+
+        const loggedUser = localStorage.getItem('user');
+        if(loggedUser) {
+            dispatch(login({username : loggedUser}));
+        }
+
+    }, []);
+
     const {isLogged, username} = useSelector((state) => state.user);
     
    

@@ -12,9 +12,7 @@ const Root = () => {
         <main className="container">
             <Outlet/>
         </main> 
-   
 
-        
         <Footer/>
     </>
   )

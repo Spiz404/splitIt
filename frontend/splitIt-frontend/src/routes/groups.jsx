@@ -15,6 +15,8 @@ const Groups = () => {
     const {isCreationLoading, isCreationError, isCreationFulfilled} = useSelector((state) => state.groupModal);
 
     useEffect(() => {
+        // clearing current group local storage item
+        localStorage.removeItem('currentGroup');
         if(isLogged) dispatch(fetchUserGroups(username));
         dispatch(closeModal());
         setRefresh(false);
@@ -38,6 +40,8 @@ const Groups = () => {
         return <h4>Creazione gruppo...</h4>;
     }
 
+    
+
     return (
 
         <>
@@ -49,15 +53,19 @@ const Groups = () => {
             </div>
             
             <div className='external-container'>
-                <div className="groups-container">
-                    {
+                {
+                    groups.length == 0 && !isModalOpen ?
+                        <p style = {{fontStyle : 'italic', color : 'grey'}}> non sei in nessun gruppo</p> :
+                        <div className="groups-container">
+                            {
+                                
+                                isLogged && Array.isArray(groups) && groups.map((group) => {                                
+                                    return <GroupItem key = {group._id} {...group}/>})
+                                
+                            }
                         
-                        isLogged && Array.isArray(groups) && groups.map((group) => {                                
-                            return <GroupItem key = {group._id} {...group}/>})
-                        
-                    }
-                
-                </div>
+                        </div>
+                }
                 {
                     isModalOpen ?  
                         <NewGroupForm setRefresh = {setRefresh}/>

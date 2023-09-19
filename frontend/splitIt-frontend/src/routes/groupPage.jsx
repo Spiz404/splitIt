@@ -1,27 +1,49 @@
 import { useDispatch, useSelector } from "react-redux"
 import axios from 'axios';
 import { useEffect, useState, useCallback } from "react";
-import { fetchCurrentGroupData } from "../features/groups/currentGroupSlice";
+import { fetchCurrentGroupData, setCurrentGroup } from "../features/groups/currentGroupSlice";
 import { Reloading } from "../icons";
 
 const GroupPage = () => {
     
     const dispatch = useDispatch();
-    
+    const [invitationLink, setInvitationLink] = useState('');
+    const [groupInvitationLinkError, setGroupInvitationLinkError] = useState(false);
     const [refresh, setRefresh] = useState(false);
-    // const [groupData, setGroupData] = useState({});
-    
+    const loggedUser = localStorage.getItem('user');
+
     useEffect(() => {
+        // fetching currenyGroup from localStorage, to avoid application to break when page is refreshed
+        const currentGroup = localStorage.getItem('currentGroup');
+        if(currentGroup != null)
+            dispatch(setCurrentGroup(currentGroup));
         dispatch(fetchCurrentGroupData(currentGroup));
         setRefresh(false);
+        setInvitationLink('');
+
     }, [refresh]);
     
+
+    const newLink = async () => {
+        try {
+            const response = await axios.get(
+                `http://localhost:8080/group/invite?group=${currentGroup}`);
+            
+            setInvitationLink(response.data);
+        }
+        catch(error) {
+            setGroupInvitationLinkError(true);
+            console.log(error);
+        }
+        
+
+    
+    };
 
     const {currentGroup, isLoading, isError} = useSelector((state) => state.currentGroup);
     const {isLogged} = useSelector((state) => state.user); 
     const {currentGroupData : groupData} = useSelector((state) => state.currentGroup)
-    // console.log("currentGroupData", groupData);
-
+    
     if (isLoading) {
         return <h4>Loading...</h4>;
     }
@@ -69,7 +91,15 @@ const GroupPage = () => {
                         </div>
                     </div>
                 </div>
-            
+                {
+                    loggedUser == groupData.users[0] && invitationLink == '' &&
+                    <p onClick = {() => {newLink()}} style = {{cursor : 'pointer'}}>crea link d'invito</p>
+
+                }
+                {
+                    invitationLink != '' &&
+                    <a href = {invitationLink}>{invitationLink}</a>
+                }
                 
             </>
         

@@ -14,5 +14,8 @@ router.route('/handleGroupUsers')
 router.route('/handleOperations')
     .post(groupController.addOperation);
 
+router.route('/invite')
+    .get(groupController.getInvitationLink)
+    .post(groupController.addUserToGroupByLink)
 module.exports = { router };
 

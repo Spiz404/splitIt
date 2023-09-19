@@ -13,31 +13,29 @@ const  LoginPage = () => {
   const [status, setStatus] = useState(401);
   const [loginError, setLoginError] = useState(false);
 
-  const testRoute = async () => {
-    await axios.get('http://localhost:8080/test', {withCredentials : true})
-  }
-
+  
   const loginUser = async (e) => {
     e.preventDefault();
     try {
 
-    const response = await axios(
-      {
-        method : 'POST',
-        data : {
-          email : email, 
-          password : password
-        },
-        withCredentials : true,
-        url : 'http://localhost:8080/login',
-      }
-    )
-    setStatus(response.status);
-    setLoginError(false);
-    
-    dispatch(login({username : email}));
-    console.log("response", response);
-    console.log(response.status);
+      const response = await axios(
+        {
+          method : 'POST',
+          data : {
+            email : email, 
+            password : password
+          },
+          withCredentials : true,
+          url : 'http://localhost:8080/login',
+        }
+      )
+      setStatus(response.status);
+      setLoginError(false);
+      
+      dispatch(login({username : response.data}));
+      console.log("response", response);
+      console.log(response.status);
+      
     }
     catch(err) {
       console.log(err.response.status);
@@ -66,13 +64,12 @@ const  LoginPage = () => {
         <Form.Control onChange = {(e) => setPassword(e.target.value)} type="password" placeholder="Password" value={password}/>
          
       </Form.Group>
-      {/* <Form.Group className="mb-3">
-        <Form.Control value='Hai già un account?'/>       
-        </Form.Group> */}
+      { loginError && <p style = {{color : "red"}}> Credenziali errate </p>}
       <Button variant="primary" type="submit">
         Submit
       </Button>
     </Form>
+    
     </>
 
   );

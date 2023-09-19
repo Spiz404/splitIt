@@ -58,7 +58,8 @@ app.post('/login', (req, res, next) => {
         else {
             req.login(user, (err) => {
                 if (err) throw err;
-                res.send("Successfully authenticated");
+                //res.cookie('user', user, {maxAge : 3600000, httpOnly : true})
+                res.send(user.email);
             })
         }
     })(req, res, next);

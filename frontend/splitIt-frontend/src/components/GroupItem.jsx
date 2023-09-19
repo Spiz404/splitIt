@@ -11,6 +11,7 @@ const GroupItem = ({name, id}) => {
 
   const handleClick = () => {
     dispatch(setCurrentGroup(id));
+    localStorage.setItem('currentGroup', id);
   };
 
   return (

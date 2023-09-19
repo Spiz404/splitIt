@@ -12,7 +12,6 @@ const initialState = {
 export const fetchUserGroups = createAsyncThunk(
     'user/fetchUserGroups',
     async (email, thunkAPI) => {
-        //console.log("email " + email);
         const response = await axios.get(`http://localhost:8080/user/userGroups?email=${email}`);
         return response.data;
     }
@@ -29,9 +28,11 @@ const userSlice = createSlice(
             login : (state, action) => {
                 state.isLogged = true;
                 state.username = action.payload.username;
+                localStorage.setItem('user', action.payload.username);
             },
 
             logout : (state) => {
+                localStorage.clear();
                 state.isLogged = false;
                 state.username = null;
             },
@@ -46,8 +47,6 @@ const userSlice = createSlice(
             });
 
             builder.addCase(fetchUserGroups.fulfilled, (state, action) => {
-                // console.log("sono qui");
-                // console.log(action);
                 state.isLoadingGroupFetch = false;
                 state.isLoadingGroupFetchError = false;
                 state.groups = action.payload;

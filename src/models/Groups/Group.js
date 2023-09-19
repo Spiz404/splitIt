@@ -2,6 +2,8 @@ const G = require('./GroupModel.js');
 const groupUtils = require('../../../utils/groupUtils.js');
 const { Operation } = require('../Operations/OperationSchemaAndModel.js');
 const userUtils = require('../../../utils/userUtils.js');
+const InvitationLinkModel = require('../Groups/GroupInvitation.js').groupInvitationModel;
+const crypto = require('crypto');
 
 const newGroup = async (groupName, founder) => {
     
@@ -99,10 +101,6 @@ const addOperation = async (groupId, payer, partecipants, amount, date) => {
     
         groupData.operations.push(operation);
         
-
-
-        // groupData.save();
-
         const updatedDocument = await groupUtils.calculateDebts(groupData, {payer, partecipants, amount });
 
         await updatedDocument.save();
@@ -118,4 +116,56 @@ const addOperation = async (groupId, payer, partecipants, amount, date) => {
     
 }
 
-module.exports = { newGroup, deleteGroup, getGroup, addUserToGroup, removeUserFromGroup, addOperation };
+const getInvitationLink = async (groupId) => {
+    // checking if a link already exists and it's not expired
+
+    const data = await InvitationLinkModel.findOne({groupId : groupId}).lean().exec();
+    
+
+    // if an invitation link doesn't exists or it's expired, create a new one
+    if (data === null || data.expirationDate < Date.now()) {
+        // create a new invitation link
+        try {
+
+            const invitationLink = crypto.createHash('sha256').update(groupId).digest('hex');
+            const newInvitationLink = new InvitationLinkModel(
+                {
+                    groupId : groupId,
+                    invitationLink : invitationLink,
+                    expiration : Date.now() + 86400000
+                }
+            );
+            await newInvitationLink.save();
+            return invitationLink;
+        }
+        catch (error) {
+            console.log(error);
+        }
+        
+    }
+
+    // if the invitation link exists and it's still valid, return it
+
+    return data.invitationLink;
+
+}
+
+const getGroupByInvitationLink = async (invitationLink) => {
+    // console.log("invitationLink ", invitationLink);
+    try {
+        const data = await InvitationLinkModel.findOne({invitationLink : invitationLink}).lean().exec();
+        if (data === null) throw new Error("Invitation link not found");
+        // console.log("data ", data);
+        // fetch group data
+        const {groupId} = data;
+
+        const groupData = await groupUtils.findDocumentById(groupId);
+        // console.log("groupData ", groupData);
+        return {...groupData, expiration : data.expiration}
+    }
+    catch (error) {
+        console.log(error);
+    }
+};
+
+module.exports = { newGroup, deleteGroup, getGroup, addUserToGroup, removeUserFromGroup, addOperation, getInvitationLink, getGroupByInvitationLink };
