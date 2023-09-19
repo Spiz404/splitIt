@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {login, logout} from "../features/user/userSlice.js";
 import { NavLink} from 'react-router-dom';
+
 const Navbar = (props) => {
 
     const dispatch = useDispatch();
@@ -41,7 +42,9 @@ const Navbar = (props) => {
                     :
 
                     <li className="nav-item">
-                        <button className = 'btn btn-primary' href="/login" onClick = {() => dispatch(login({username : 'lorespiz03@gmail.com'}))}>Login</button>
+                        <NavLink to = '/login'>
+                        <button className = 'btn btn-primary' href="/login">Login</button>
+                        </NavLink>
                     </li>
                 
             }

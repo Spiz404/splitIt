@@ -42,8 +42,9 @@ module.exports = function(passport) {
         async (email, cb) => {
             try {
                 const data = await getUser(email);
+                const userEmail = data.email;
                 // data should be null if the user doesn't exists in the database
-                return cb(null, data);
+                return cb(null, userEmail);
                 
             }
             catch(error) {

@@ -53,15 +53,12 @@ app.use('/group', groupRoutes);
 app.post('/login', (req, res, next) => { 
     passport.authenticate('local',    
     (err, user, info) => {
-        // console.log(info)
-        // console.log(user);
         if (err) throw err;
         if (!user) res.status(401).send("No user with that email");
         else {
             req.login(user, (err) => {
                 if (err) throw err;
                 res.send("Successfully authenticated");
-                // console.log(req.user);
             })
         }
     })(req, res, next);
@@ -71,6 +68,12 @@ app.post('/register', async (req, res) => {
     console.log(req.body);
     await newUser(req, res);
 });
+
+app.get('/test', (req, res) => {
+    // console.log('test route, user object in request');
+    console.log(req.user);
+    res.send();
+})
 
 app.listen(port, () => {
     console.log("app listening on port " + port);
