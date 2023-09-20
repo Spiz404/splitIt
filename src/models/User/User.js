@@ -5,8 +5,9 @@ const bcrypt = require('bcryptjs');
 
 
 const getUser = async (userEmail) => {
-    console.log(userEmail);
+    // console.log("funzione getUser", userEmail);
     let userData = await U.User.findOne({email : userEmail}).exec();
+    // console.log("funzione getUser, risposta", userData);
     return userData;
 
 }
@@ -27,33 +28,42 @@ const createNewUser  = async ( {userName, userSurname, userEmail, password} ) =>
         
     );
 
-    U.User.findOne({email : userEmail})
-    .then((user) => {
-        if (user) return 1;
-        newUser.save()
-        .then (
-            () => {return 0}
-        )
-        .catch (
-            (err) => {return {ret : 1, error : err}}
-        )
-    }).catch(
-        err => { return {ret : 2, error : err} }
-    ) 
-     
-      
-    // try {
+    // U.User.findOne({email : userEmail})
+    // .then((user) => {
+    //     console.log("createNewUser" , user);
+        
+    //     // if an user already exists, return 1
+    //     if (user) {
+    //         console.log("sono qui");
+    //         return {ret : 1, error : "user already exists"};
 
-    //     const data = await newUser.save();
-    //     return "user saved correctly";
+    //     } 
+            
+        
+    //     newUser.save()
+    //     .then (
+    //         () => {return 0}
+    //     )
+    //     .catch (
+    //         (err) => {return {ret : 1, error : err}}
+    //     )
+    // }).catch(
+    //     err => { return {ret : 2, error : err} }
+    // ) 
+    try {
+        const data = U.User.findOne({email : userEmail}).exec();
+        const savedUser = await newUser.save();
+        // if (data) {
+        //     throw new Error ("user already exists");
+        // }
 
-    // }
-    // catch(error) {
+        return {ret : 0, error : null};
+    }
+    catch(error) {
+        console.log(error);
+        return {ret : 1, error : "duplicate keys"};
+    }
 
-    //     return "error : " + error;
-
-    // }
-    
 };
 
 /* function that deletes the user with the given email from the database */

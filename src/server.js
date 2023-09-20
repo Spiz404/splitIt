@@ -51,6 +51,7 @@ app.use('/user', userRoutes);
 app.use('/group', groupRoutes);
 
 app.post('/login', (req, res, next) => { 
+
     passport.authenticate('local',    
     (err, user, info) => {
         if (err) throw err;
@@ -58,16 +59,25 @@ app.post('/login', (req, res, next) => {
         else {
             req.login(user, (err) => {
                 if (err) throw err;
-                //res.cookie('user', user, {maxAge : 3600000, httpOnly : true})
                 res.send(user.email);
             })
         }
     })(req, res, next);
+
 });
 
 app.post('/register', async (req, res) => {
+    
     console.log(req.body);
-    await newUser(req, res);
+
+    try {
+        await newUser(req, res);
+    }
+    catch(err) {
+        console.log(err);
+        res.status(501).send();
+    }
+    
 });
 
 app.get('/test', (req, res) => {

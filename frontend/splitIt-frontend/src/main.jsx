@@ -10,7 +10,7 @@ import {
   redirect
 } from 'react-router-dom';
 
-import './index.css'
+
 import ErrorPage from './routes/error-page'
 import Groups from './routes/groups'
 import GroupPage from './routes/groupPage'
@@ -22,6 +22,7 @@ import InvitationPage from './routes/invitationPage'
 const Index = () => {
   
   const {isLogged} = useSelector((state) => state.user);
+  const {fulfilledRegistration} = useSelector((state) => state.registration);
 
   const router = createBrowserRouter(
     [
@@ -46,6 +47,7 @@ const Index = () => {
           },
           {
             path: "register",
+            loader : () => (fulfilledRegistration ? redirect('/login') : null),
             element : <RegisterPage/>
           },
           {
@@ -57,6 +59,7 @@ const Index = () => {
       
     ]
   );
+
   return <RouterProvider router = {router}/>
 }
 

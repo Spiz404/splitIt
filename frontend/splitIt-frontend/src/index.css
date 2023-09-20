@@ -3,7 +3,7 @@
   top: 0;
   width: 100%;
   padding: 1rem;
-}
+} 
 
 a {
   font-weight: 500;
@@ -46,24 +46,57 @@ h1 {
 }
 
 
+/* .container {
+  margin: 0;
+  text-align: center;
+  width: 100%;
+} */
+
+.container {
+  margin : 0 auto;
+  border : 1px solid red;
+  /* display: flex; */
+  align-items: center;
+  justify-content: center;
+  justify-items : center;
+  padding : 0;
+}
+
+.navbar  {
+  display : flex;
+  flex-direction : row;
+  
+  align-items : center;
+  justify-content : center;
+;
+  top : 0;
+  /* width : 100%; */
+  padding : 0.5rem;
+  /* border : 1px solid green; */
+}
+
 #root {
   width: 100%;
 }
 
-.container {
+
+/* GROUPS PAGE */
+
+.cont {
+  
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 7rem;
-  width: 100vw;
-  height: 100%;
   margin: 0 auto;
-  
 }
 
 
+.groupCard {
+  
+}
 
-/* GROUP PAGE */
+/* GROUP ITEM PAGE */
 
 .groupItem {
   display: flex;
@@ -72,7 +105,6 @@ h1 {
   justify-content: center;
   background-color: #e8e8e8;
   border-radius: 1rem;
-  /* padding: 0.5rem; */
 }
 
 .groups-container {
@@ -140,9 +172,7 @@ svg:hover {
 
 .group-user-container {
   float: left;
-  /* width: 30%; */
   width: max-content;
-  /* background-color: #f8fafc; */
   background-color: #EEEEEE;
   border-radius: 5px;
   margin-right: 1rem;
@@ -152,7 +182,7 @@ svg:hover {
 .external-container-operations-debts {
   display: flex;
   flex-direction: column;
-  width: 70%; /* Larghezza delle div sopra/affianco */
+  width: 70%; 
 }
 
 
@@ -160,7 +190,6 @@ svg:hover {
   padding: 1rem;
   width: 100%;
   border-radius: 5px;
-  /* background-color: #f8fafc; */
   background-color: #EEEEEE;
 }
 
@@ -185,3 +214,4 @@ svg:hover {
   color: grey;
   font-size: 10pt;
 }
+

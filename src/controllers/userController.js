@@ -12,6 +12,7 @@ const newUser = async (req, res) => {
 
     const {name, surname, email, password} = req.body;
     const data = await userDbFunctions.createNewUser({userName : name, userSurname : surname, userEmail : email, password : password});
+    console.log("funzione newUser", data);
     res.send(data);
 }
 

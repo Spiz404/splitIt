@@ -1,0 +1,20 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+    registrationFulfilled : false,
+};
+const registrationSlice = createSlice({
+    name : "registration",
+    initialState,
+    reducers : {
+        setRegistrationFulfilled : (state) => {
+            state.registrationFulfilled = true;
+        }
+    }
+});
+
+export const { setRegistrationFulfilled } = registrationSlice.actions; 
+export default registrationSlice.reducer;
+
+
+

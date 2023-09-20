@@ -4,7 +4,7 @@ import axios from 'axios';
 import {useState} from 'react';
 import {login} from '../features/user/userSlice';
 import {useDispatch} from 'react-redux';
-
+import { NavLink } from "react-router-dom";
 const  LoginPage = () => {
 
   const dispatch = useDispatch();  
@@ -33,8 +33,8 @@ const  LoginPage = () => {
       setLoginError(false);
       
       dispatch(login({username : response.data}));
-      console.log("response", response);
-      console.log(response.status);
+      // console.log("response", response);
+      // console.log(response.status);
       
     }
     catch(err) {
@@ -64,9 +64,12 @@ const  LoginPage = () => {
         <Form.Control onChange = {(e) => setPassword(e.target.value)} type="password" placeholder="Password" value={password}/>
          
       </Form.Group>
-      { loginError && <p style = {{color : "red"}}> Credenziali errate </p>}
+      { loginError && <p style = {{color : "red"}}> Credenziali errate </p> }
+      <Form.Group className="mb-3">
+        <NavLink to = '/register'> Non hai un account? Registrati </NavLink>
+      </Form.Group>
       <Button variant="primary" type="submit">
-        Submit
+        Login
       </Button>
     </Form>
     

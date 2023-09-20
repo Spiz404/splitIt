@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchUserGroups } from "../features/user/userSlice";
 import GroupItem from "../components/GroupItem";
 import {openModal, closeModal} from "../features/groups/groupModalSlice";
-import { Reloading } from "../icons";
+import { Reloading, Plus } from "../icons";
 import NewGroupForm from "../components/NewGroupForm";
 
 const Groups = () => {
@@ -50,6 +50,9 @@ const Groups = () => {
                 <div onClick = {() => setRefresh(true)}>
                 <Reloading />
                 </div>
+                <div onClick = {() => dispatch(openModal())}>
+                <Plus />
+                </div>
             </div>
             
             <div className='external-container'>
@@ -67,10 +70,10 @@ const Groups = () => {
                         </div>
                 }
                 {
-                    isModalOpen ?  
+                    isModalOpen &&  
                         <NewGroupForm setRefresh = {setRefresh}/>
-                    : 
-                        <button className="btn btn-primary add-group-button" onClick = {() => dispatch(openModal())}>crea gruppo</button>
+                    // : 
+                    //     <button className="btn btn-primary add-group-button" onClick = {() => dispatch(openModal())}>crea gruppo</button>
 
                 }
                 

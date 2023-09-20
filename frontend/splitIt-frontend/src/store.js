@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './features/user/userSlice';
 import groupModalReducer from './features/groups/groupModalSlice';
 import currentGroupReducer from './features/groups/currentGroupSlice';
+import registrationSlice from './features/registration/registrationSlice';
 
 const store = configureStore(
     {
@@ -9,6 +10,7 @@ const store = configureStore(
             user : userReducer,
             groupModal : groupModalReducer,
             currentGroup : currentGroupReducer,
+            registration : registrationSlice,
         }
     }
 );

@@ -11,7 +11,7 @@ module.exports = function(passport) {
             async (email, password, done) => {
                 try {
                     const data = await getUser(email);
-                
+                    
                     if (data === null) {
                         console.log('null data');
                         return done(null, false, {message : "No user with that email"});
