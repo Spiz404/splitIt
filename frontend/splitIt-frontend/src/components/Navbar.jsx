@@ -24,20 +24,31 @@ const NavComponent = (props) => {
 
     const {isLogged, username} = useSelector((state) => state.user);
     
-   
+
     return (
         
-        <Navbar expand="lg" className="bg-body-tertiary" >
-        {/* <Container> */}
+        <Navbar expand="sm" className="bg-body-tertiary" >
+        <Container fluid>
+            {/* part of the navbar floating of right */}
             <Navbar.Brand href="#home">SplitIt</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
+            <Navbar.Collapse id = "response-navbar-nav" className="justify-content-end">  
+            <Nav className = "me-auto">
+            
                 {isLogged && <Nav.Link href="/groups">Gruppi</Nav.Link> }
+            </Nav>
+            {/* part of the navbar floating on right */}
+            <Nav>
+
                 { isLogged ? 
-                    <NavDropdown title={username} id="basic-nav-dropdown">
-                    <NavDropdown.Item onClick = {() => dispatch(logout())}>logout</NavDropdown.Item>
-                    </NavDropdown>
+                
+                <NavDropdown title={username} id="basic-nav-dropdown">
+                    <NavDropdown.Item onClick = {() => dispatch(logout())}
+                    >profilo</NavDropdown.Item>
+                    {/* <NavDropdown.Divider /> */}
+                    <NavDropdown.Item onClick = {() => dispatch(logout())}
+                    style = {{color : 'red'}}>logout</NavDropdown.Item>
+                </NavDropdown>
                     :
                     
                     <Nav.Link href="/login">login</Nav.Link>
@@ -45,7 +56,9 @@ const NavComponent = (props) => {
             
             </Nav>
             </Navbar.Collapse>
-        {/* </Container> */}
+           
+
+        </Container>
         </Navbar>
     
     );

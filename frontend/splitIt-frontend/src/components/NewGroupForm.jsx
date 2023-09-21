@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { createNewGroup } from "../features/groups/groupModalSlice";
 import { closeModal } from "../features/groups/groupModalSlice";
+
 const NewGroupForm = ({setRefresh}) => {
 
     const {username : email} = useSelector((state) => state.user);
@@ -18,14 +19,15 @@ const NewGroupForm = ({setRefresh}) => {
     }
 
     return (
-        <form onSubmit={(e) => handleNewGroupSubmit(e)}>
-            <div className="form-group">
-                <label htmlFor="groupName">Nome gruppo</label>
-                <input className="form-control" id="groupName" aria-describedby="emailHelp" placeholder="Inserire nome nuovo gruppo"/>
-            </div>
-            
-            <button type="submit" className="btn btn-primary">crea gruppo</button>
-        </form>
+        
+            <form onSubmit={(e) => handleNewGroupSubmit(e)}>
+                <div className="form-group">
+                    <label htmlFor="groupName">Nome gruppo</label>
+                    <input className="form-control" id="groupName" aria-describedby="emailHelp" placeholder="Inserire nome nuovo gruppo"/>
+                </div>
+                
+                <button type="submit" className="btn btn-primary">crea gruppo</button>
+            </form>
     );
 }
 export default NewGroupForm;

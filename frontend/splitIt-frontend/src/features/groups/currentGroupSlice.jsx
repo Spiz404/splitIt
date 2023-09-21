@@ -5,6 +5,8 @@ const initialState = {
     currentGroup : '',
     isLoading : false,
     isError : false,
+    newOperationLoading : false,
+    newOperationError : false,
     currentGroupData : {}
 };
 
@@ -18,9 +20,21 @@ export const fetchCurrentGroupData = createAsyncThunk(
             `http://localhost:8080/group?id=${group}`
         );
 
-        //console.log("response: ", response);
         return response.data;
 });
+
+export const addNewOperation = createAsyncThunk(
+    'group/addNewOperation',
+    async (operation) => {
+        console.log('operation request', operation);
+        const response = await axios.post(
+            'http://localhost:8080/group/handleOperations',
+            {operation : operation}
+        );
+
+        return response;
+    }
+);
 
 const currentGroupSlice = createSlice({
     name : 'currentGroup',
@@ -51,8 +65,24 @@ const currentGroupSlice = createSlice({
             console.log("rejected");
             state.isLoading = false;
             state.isError = true;
+        }),
+
+        builder.addCase(addNewOperation.pending, (state, action) => {
+            state.newOperationLoading = true;
+            state.newOperationError = false;
+        }),
+
+        builder.addCase(addNewOperation.fulfilled, (state, action) => {
+            state.newOperationLoading = false;
+            state.newOperationError = false;
+        }),
+
+        builder.addCase(addNewOperation.rejected, (state, action) => {
+            state.newOperationLoading = false;
+            state.newOperationError = true;
         })
-    }
+
+    } 
 });
 
 export default currentGroupSlice.reducer;

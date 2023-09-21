@@ -5,6 +5,9 @@ import GroupItem from "../components/GroupItem";
 import {openModal, closeModal} from "../features/groups/groupModalSlice";
 import { Reloading, Plus } from "../icons";
 import NewGroupForm from "../components/NewGroupForm";
+import Collapse from 'react-bootstrap/Collapse';
+import Spinner from "react-bootstrap/Spinner";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const Groups = () => {
     
@@ -13,6 +16,7 @@ const Groups = () => {
     const {isModalOpen} = useSelector((state) => state.groupModal);
     const [isRefresh, setRefresh] = useState(false);
     const {isCreationLoading, isCreationError, isCreationFulfilled} = useSelector((state) => state.groupModal);
+    const [modal, setModal] = useState(false);
 
     useEffect(() => {
         // clearing current group local storage item
@@ -29,7 +33,12 @@ const Groups = () => {
     }
 
     if (isLoadingGroupFetch) {
-        return <h4> loading... </h4>
+        return ( 
+            // <Spinner animation="border" role="status" className = "loading-spinner">
+            //     <span className="visually-hidden">Loading...</span>
+            // </Spinner>
+            <LoadingSpinner/>
+        );
     }
 
     if (isLoadingGroupFetchError) {
@@ -48,13 +57,13 @@ const Groups = () => {
             <div className = 'heading-container'>
                 <h2>groups</h2>  
                 <div onClick = {() => setRefresh(true)}>
-                <Reloading />
+                    <Reloading />
                 </div>
-                <div onClick = {() => dispatch(openModal())}>
+                <div onClick = {() => 
+                    dispatch(openModal())}>
                 <Plus />
                 </div>
             </div>
-            
             <div className='external-container'>
                 {
                     groups.length == 0 && !isModalOpen ?
@@ -69,16 +78,16 @@ const Groups = () => {
                         
                         </div>
                 }
-                {
-                    isModalOpen &&  
+                <Collapse in={isModalOpen}>
+                    {/* <div>testo testo testo</div> */}
+                    {/* isModalOpen &&   */}
+                       <div>
                         <NewGroupForm setRefresh = {setRefresh}/>
-                    // : 
-                    //     <button className="btn btn-primary add-group-button" onClick = {() => dispatch(openModal())}>crea gruppo</button>
-
-                }
+                        </div>
+                
+                </Collapse>
                 
             </div>
-            
         </>
     );
 

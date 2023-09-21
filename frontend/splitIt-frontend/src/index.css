@@ -54,7 +54,7 @@ h1 {
 
 .container {
   margin : 0 auto;
-  border : 1px solid red;
+  /* border : 1px solid red; */
   /* display: flex; */
   align-items: center;
   justify-content: center;
@@ -89,6 +89,14 @@ h1 {
   align-items: center;
   padding-top: 7rem;
   margin: 0 auto;
+}
+
+.loading-spinner {
+  /* width: 20px; */
+  position: fixed;
+  top: 35%;
+
+  color : #b1b1b1;
 }
 
 
@@ -215,3 +223,7 @@ svg:hover {
   font-size: 10pt;
 }
 
+.page-error {
+  color : grey;
+  font-style: italic;
+}

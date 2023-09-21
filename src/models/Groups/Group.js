@@ -85,7 +85,7 @@ const removeUserFromGroup = async (groupId, userEmail) => {
 
 // partecipants should be an array
 
-const addOperation = async (groupId, payer, partecipants, amount, date) => {
+const addOperation = async (groupId, payer, partecipants, amount, date, description) => {
 
     try {
         const groupData = await groupUtils.findDocumentById(groupId);
@@ -95,7 +95,8 @@ const addOperation = async (groupId, payer, partecipants, amount, date) => {
                 amount : amount,
                 partecipants : partecipants,
                 payer : payer,
-                date : date
+                date : date,
+                description : description
             }
         );
     

@@ -6,7 +6,8 @@ const operationSchema = mongoose.Schema({
     amount : Number,
     partecipants : [String],
     payer : String,
-    date : Date
+    date : Date,
+    description : String
     
 });
 

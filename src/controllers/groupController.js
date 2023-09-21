@@ -45,8 +45,8 @@ const removeUserFromGroup = async (req, res) => {
 
 const addOperation = async (req, res) => {
     
-    const {id : groupId, payer, partecipants, amount, date} = req.body.operation;
-    const data = await groupDbFunctions.addOperation(groupId, payer, partecipants, amount, date);
+    const {id : groupId, payer, partecipants, amount, date, description} = req.body.operation;
+    const data = await groupDbFunctions.addOperation(groupId, payer, partecipants, amount, date, description);
     res.json(data);
 
 }
