@@ -12,7 +12,9 @@ const initialState = {
 export const fetchUserGroups = createAsyncThunk(
     'user/fetchUserGroups',
     async (email, thunkAPI) => {
-        const response = await axios.get(`http://localhost:8080/user/userGroups?email=${email}`);
+        const response = await axios.get
+        (`http://localhost:8080/user/userGroups?email=${email}`,
+        {withCredentials : true});
         return response.data;
     }
 );
@@ -31,8 +33,24 @@ const userSlice = createSlice(
                 localStorage.setItem('user', action.payload.username);
             },
 
-            logout : (state) => {
+            logout : async (state) => {
+                
+                try {
+                    const response = await axios.post(
+                        'http://localhost:8080/logout', 
+                        {},
+                        {withCredentials : true});
+                    
+                    console.log(response);
+                    console.log(response.headers);
+                    console.log(response.headers['Set-Cookie'])
+                }
+                catch(error) {
+                    console.log(error);
+                }
+
                 localStorage.clear();
+                
                 state.isLogged = false;
                 state.username = null;
             },

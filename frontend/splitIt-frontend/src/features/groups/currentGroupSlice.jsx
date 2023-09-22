@@ -17,7 +17,8 @@ export const fetchCurrentGroupData = createAsyncThunk(
     async (group) => {
     
         const response = await axios.get(
-            `http://localhost:8080/group?id=${group}`
+            `http://localhost:8080/group?id=${group}`,
+            {withCredentials : true}
         );
 
         return response.data;

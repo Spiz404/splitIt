@@ -22,7 +22,8 @@ export const createNewGroup = createAsyncThunk(
             {
                 "name" : name,
                 "email" : email
-            }
+            },
+            {withCredentials : true}
         );
 
         return response.data;

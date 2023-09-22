@@ -17,24 +17,15 @@ const  LoginPage = () => {
   const loginUser = async (e) => {
     e.preventDefault();
     try {
+      const response = await axios.post('http://localhost:8080/login', 
+      {email : email, password : password},
+      { withCredentials : true });
 
-      const response = await axios(
-        {
-          method : 'POST',
-          data : {
-            email : email, 
-            password : password
-          },
-          withCredentials : true,
-          url : 'http://localhost:8080/login',
-        }
-      )
+      console.log(response);
       setStatus(response.status);
       setLoginError(false);
-      
+      console.log("set-cookie", response.headers['set-cookie']);
       dispatch(login({username : response.data}));
-      // console.log("response", response);
-      // console.log(response.status);
       
     }
     catch(err) {
