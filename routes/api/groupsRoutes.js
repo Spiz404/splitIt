@@ -1,6 +1,8 @@
 const groupController = require('../../src/controllers/groupController.js');
 const router = require('express').Router();
+const {isAuthenticated} = require('../../utils/middlewares/auth.js');
 
+router.use(isAuthenticated);
 
 router.route('/')
     .get(groupController.getGroupInfo)

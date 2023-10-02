@@ -1,5 +1,8 @@
 const userController = require('../../src/controllers/userController.js');
 const router = require('express').Router();
+const {isAuthenticated} = require('../../utils/middlewares/auth.js');
+
+router.use(isAuthenticated);
 
 router.route('/')
     .get(userController.getUserInfo)

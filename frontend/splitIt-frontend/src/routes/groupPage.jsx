@@ -8,19 +8,23 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Button from 'react-bootstrap/Button';
 import LoadingSpinner from "../components/LoadingSpinner";
 import NewOperationModal from "../components/NewOperationModal";
-
-
+import Modal from 'react-bootstrap//Modal';
+// import { openModal, closeModal } from "../features/groups/groupModalSlice";
 const GroupPage = () => {
     
-    
+
     const dispatch = useDispatch();
     const [invitationLink, setInvitationLink] = useState('');
     const [groupInvitationLinkError, setGroupInvitationLinkError] = useState(false);
     const [refresh, setRefresh] = useState(false);
     const [operationModal, setOperationModal] = useState(false);
+    
+    const handleClose = () => setOperationModal(false);
+
+    const {open: isNewOperationModalOpen} = useSelector((state) => state.groupModal);
 
     const loggedUser = localStorage.getItem('user');
-    
+
     useEffect(() => {
         // retrieving currentGroup from localStorage, to avoid application to break when page is refreshed
         const currentGroup = localStorage.getItem('currentGroup');
@@ -75,6 +79,7 @@ const GroupPage = () => {
         overlay={renderTooltip({text : "aggiungi operazione al gruppo"})}
     >
         <div onClick = {() => {setOperationModal(true)}}>
+        {/* <div onClick = {() => dispatch(openModal())}> */}
             <Plus />
         </div>
     </OverlayTrigger>
@@ -183,10 +188,13 @@ const GroupPage = () => {
                     <a style = {{color : "grey"}} href = {invitationLink}>{invitationLink}</a>
                 }
 
-                {
-                    operationModal &&
-                    <NewOperationModal/>
-                }
+
+                <Modal show = {operationModal} onHide={handleClose}>
+                        <NewOperationModal handleClose = {handleClose}/>
+                        <Button  variant = "danger" onClick = {() => handleClose()} style = {{'marginRight' : '2rem', 'marginLeft' : '2rem', 'marginBottom' : '2rem'}}> 
+                            Chiudi 
+                        </Button>
+                </Modal>
                 
             </>
         

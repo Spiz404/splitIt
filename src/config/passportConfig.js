@@ -10,6 +10,7 @@ module.exports = function(passport) {
             }, 
             async (email, password, done) => {
                 try {
+                    // console.log(email, password);
                     const data = await getUser(email);
                     
                     if (data === null) {
@@ -34,14 +35,19 @@ module.exports = function(passport) {
 
     passport.serializeUser(
         (user, cb) => {
+            // console.log("serialization", user);
+            console.log("serialization", user.email);
             cb(null, user.email)
         }
     );
 
     passport.deserializeUser(
         async (email, cb) => {
+            console.log("SONO QUI");
             try {
+                // console.log("deserialization", email);
                 const data = await getUser(email);
+                // console.log("deserialization", data);
                 const userEmail = data.email;
                 // data should be null if the user doesn't exists in the database
                 return cb(null, userEmail);

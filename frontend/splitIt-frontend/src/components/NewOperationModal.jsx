@@ -3,9 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { addNewOperation } from "../features/groups/currentGroupSlice";
+import Modal from 'react-bootstrap/Modal';
+// import { closeModal } from "../features/groups/groupModalSlice";
+
 /* form with amount, partecipants, date*/
 
-const NewOperationModal = () => {
+const NewOperationModal = ({handleClose}) => {
 
     const dispatch = useDispatch();
     const {currentGroupData : groupData} = useSelector((state) => state.currentGroup);
@@ -15,6 +18,9 @@ const NewOperationModal = () => {
     const  [amount, setAmount] = useState(0);
     const [operationUsers, setOperationUsers] = useState([]);
     const [date, setDate] = useState('');
+    const [show, setShow] = useState(false);
+    
+
     const [description, setDescription] = useState('');
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -31,7 +37,7 @@ const NewOperationModal = () => {
     const userList = () => {
         return users.map((user) => {
                 return (
-                    <Form.Check
+                    <Form.Check className = "mb-3"
                         onChange={(e) => {
                             if(e.target.checked) {
                                 setOperationUsers([...operationUsers, e.target.id]);
@@ -48,7 +54,8 @@ const NewOperationModal = () => {
     }
     
     return (
-        <Form onSubmit = {(e) => handleSubmit(e)}>
+        
+        <Form onSubmit = {(e) => handleSubmit(e)} style = {{'margin': '2rem'}}>
             <Form.Group className="mb-3">
                 <Form.Label>Quantità</Form.Label>
                 <Form.Control 
@@ -57,7 +64,7 @@ const NewOperationModal = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-                <Form.Label>Partecipanti</Form.Label>
+                <Form.Label> Partecipanti </Form.Label>
                 {
                     userList()
                 }
@@ -79,8 +86,9 @@ const NewOperationModal = () => {
                     onChange = {(e) => {setDescription(e.target.value)}} />
             </Form.Group>
 
-            <Button type = "submit"> aggiungi operazione</Button>
+            <Button type = "submit" style = {{'width' : '100%'}} onClick = {handleClose}> aggiungi operazione</Button>
         </Form>
+    
     );
 }
 export default NewOperationModal;

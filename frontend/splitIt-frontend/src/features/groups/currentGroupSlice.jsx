@@ -30,7 +30,8 @@ export const addNewOperation = createAsyncThunk(
         console.log('operation request', operation);
         const response = await axios.post(
             'http://localhost:8080/group/handleOperations',
-            {operation : operation}
+            {operation : operation},
+            {withCredentials : true}
         );
 
         return response;
