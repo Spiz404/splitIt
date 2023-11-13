@@ -1,5 +1,7 @@
-# ignor node_modules folder
+# ignore node_modules folder
 node_modules
+
+sessions
 
 # ignore .env file
 .env
